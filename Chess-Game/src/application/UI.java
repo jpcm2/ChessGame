@@ -1,6 +1,10 @@
 package application;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import chess.ChessPiece;
+import chess.ChessPosition;
 import chess.Color;
 
 public class UI {
@@ -24,6 +28,18 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+	public static ChessPosition readChessPosition(Scanner sc) {
+		try {
+			String leitura = sc.nextLine();
+			char column = leitura.charAt(0);
+			int row = Integer.parseInt(leitura.substring(1));
+			return new ChessPosition(column, row);
+		}
+		catch( Exception e) {
+			throw new InputMismatchException("Posição inválida. O formato deve ser (Coluna: a - h) e (Linha: 1- 8)");
+		}
+	}
+	
 	public static void printBoard(ChessPiece[][] pieces) {
 		for (int i = 0; i < pieces.length; ++i) {
 			System.out.print((8 - i) + " ");
