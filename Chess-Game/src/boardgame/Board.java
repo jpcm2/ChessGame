@@ -70,4 +70,17 @@ public class Board {
 			return true;
 		}
 	}
+	
+	public Piece removePiece(Position position) {
+		if(!this.positionExists(position)) {
+			throw new BoardException("Posição inválida!");
+		}
+		if(piece(position) == null) {
+			return null;
+		}
+		Piece auxiliar = piece(position);
+		auxiliar.position = null;
+		pieces[position.getRow()][position.getColumn()] = null;
+		return auxiliar;
+	}
 }
