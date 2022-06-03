@@ -25,6 +25,11 @@ public class ChessMatch {
 		return tab;
 	}
 	
+	public boolean[][] movimentosPossiveis(ChessPosition origem){
+		Position position = origem.toPosition();
+		validateOriginalPosition(position);
+		return board.piece(position).possibleMoves();
+	}
 	public ChessPiece performChessMove(ChessPosition origem, ChessPosition fim) {
 		Position original = origem.toPosition();
 		Position destino = fim.toPosition();
