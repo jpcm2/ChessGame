@@ -8,10 +8,22 @@ import chess.pieces.Torre;
 
 public class ChessMatch {
 	
+	private int turn;
+	private Color currentPlayer;
 	private Board board;
 	
+	public int getTurn() {
+		return turn;
+	}
+
+	public Color getCurrentPlayer() {
+		return currentPlayer;
+	}
+
 	public ChessMatch() {
 		board = new Board(8, 8);
+		this.turn = 1;
+		this.currentPlayer = Color.WHITE;
 		this.initialSetup();
 	}
 	
@@ -36,6 +48,7 @@ public class ChessMatch {
 		validateOriginalPosition(original);
 		validateDestinoPosition(original, destino);
 		Piece pecaCapturada = makeMove(original, destino);
+		nextTurn();
 		return (ChessPiece) pecaCapturada;
  	}
 	
@@ -47,6 +60,9 @@ public class ChessMatch {
 	}
 	
 	private void validateOriginalPosition(Position teste) {
+		if(currentPlayer != ((ChessPiece)(board.piece(teste))).getColor()) {
+			throw new ChessException("Cor da peça selecionada é incorreta!");
+		}
 		if(!board.thereIsAPiece(teste)) {
 			throw new ChessException("Posição não possui nenhuma peça");
 		}
@@ -64,6 +80,15 @@ public class ChessMatch {
 	
 	private void placeNewPiece(char column, int row , ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
+	}
+	
+	private void nextTurn() {
+		turn++;
+		if(currentPlayer == Color.WHITE) {
+			currentPlayer = Color.BLACK;
+		}else {
+			currentPlayer = Color.WHITE;
+		}
 	}
 	
 	private void initialSetup() {
