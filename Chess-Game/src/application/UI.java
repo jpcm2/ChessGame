@@ -1,6 +1,7 @@
 package application;
 
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -92,9 +93,14 @@ public class UI {
 		System.out.println();
 		printPecasCapturadas(capturadas);
 		System.out.println("Turno: " + chessMatch.getTurn());
-		System.out.println("Esperando o jogador: " + chessMatch.getCurrentPlayer());
-		if(chessMatch.getCheck()) {
-			System.out.println("CHECK");
+		if(!chessMatch.getCheckmate()) {
+			System.out.println("Esperando o jogador: " + chessMatch.getCurrentPlayer());
+			if(chessMatch.getCheck()) {
+				System.out.println("CHECK");
+			}
+		}else {
+			System.out.println("CHECKMATE!");
+			System.out.println("VENCEDOR: " + chessMatch.getCurrentPlayer());
 		}
 	}
 	

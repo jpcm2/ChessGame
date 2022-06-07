@@ -16,6 +16,7 @@ public class ChessMatch {
 	private Color currentPlayer;
 	private Board board;
 	private boolean check;
+	private boolean checkMate;
 	
 	private List<ChessPiece> pecasNoTabuleiro = new ArrayList<>();
 	private List<ChessPiece> pecasCapturadas = new ArrayList<>();
@@ -26,6 +27,10 @@ public class ChessMatch {
 	
 	public boolean getCheck() {
 		return this.check;
+	}
+	
+	public boolean getCheckmate() {
+		return this.checkMate;
 	}
 	
 	public Color getCurrentPlayer() {
@@ -67,7 +72,12 @@ public class ChessMatch {
 			throw new ChessException("Voce não pode se colocar em check");
 		}
 		this.check = testCheck(opponent(currentPlayer)) ? true: false;
-		nextTurn();
+		
+		if(testCheckMate(opponent(currentPlayer))) {
+			this.checkMate = true;
+		}else {
+			nextTurn();
+		}
 		return (ChessPiece) pecaCapturada;
  	}
 	
@@ -151,20 +161,37 @@ public class ChessMatch {
 		return false;
 	}
 	
+	private boolean testCheckMate(Color color) {
+		if(!testCheck(color)) {
+			return false;
+		}
+		List<Piece> pecasAmigas = pecasNoTabuleiro.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
+		for(Piece p: pecasAmigas) {
+			boolean[][] mat = p.possibleMoves();
+			for(int i = 0; i < mat.length; ++i) {
+				for(int j = 0; j <  mat.length; ++j) {
+					if(mat[i][j]) {
+						Position origem = ((ChessPiece)p).getChessPosition().toPosition();
+						Position destino = new Position(i, j);
+						Piece capturada = makeMove(origem, destino);
+						boolean testCheck = testCheck(color);
+						desfazerMovimento(origem, destino, capturada);
+						if(!testCheck) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 	private void initialSetup() {
-		placeNewPiece('b', 6, new Torre(board, Color.WHITE));
-		placeNewPiece('e', 8, new King(board, Color.BLACK));
-		placeNewPiece('c', 1, new Torre(board, Color.WHITE));
-        placeNewPiece('c', 2, new Torre(board, Color.WHITE));
-        placeNewPiece('d', 2, new Torre(board, Color.WHITE));
-        placeNewPiece('e', 2, new Torre(board, Color.WHITE));
-        placeNewPiece('e', 1, new Torre(board, Color.WHITE));
-        placeNewPiece('d', 1, new King(board, Color.WHITE));
-
-        placeNewPiece('c', 7, new Torre(board, Color.BLACK));
-        placeNewPiece('c', 8, new Torre(board, Color.BLACK));
-        placeNewPiece('d', 7, new Torre(board, Color.BLACK));
-        placeNewPiece('e', 7, new Torre(board, Color.BLACK));
-        placeNewPiece('d', 8, new King(board, Color.BLACK));
+		placeNewPiece('h', 7, new Torre(board, Color.WHITE));
+        placeNewPiece('d', 1, new Torre(board, Color.WHITE));
+        placeNewPiece('e', 1, new King(board, Color.WHITE));
+        
+        placeNewPiece('b', 8, new Torre(board, Color.BLACK));
+        placeNewPiece('a', 8, new King(board, Color.BLACK));
 	}
 }
