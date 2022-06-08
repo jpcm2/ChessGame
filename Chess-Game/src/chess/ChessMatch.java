@@ -11,6 +11,7 @@ import chess.pieces.Bispo;
 import chess.pieces.Cavalo;
 import chess.pieces.King;
 import chess.pieces.Peao;
+import chess.pieces.Rainha;
 import chess.pieces.Torre;
 
 public class ChessMatch {
@@ -108,6 +109,9 @@ public class ChessMatch {
 	}
 	
 	private void validateOriginalPosition(Position teste) {
+		if(board.piece(teste) == null) {
+			throw new ChessException("Posição inválida");
+		}
 		if(currentPlayer != ((ChessPiece)(board.piece(teste))).getColor()) {
 			throw new ChessException("Cor da peça selecionada é incorreta!");
 		}
@@ -195,7 +199,8 @@ public class ChessMatch {
 		placeNewPiece('a', 1, new Torre(board, Color.WHITE));
 		placeNewPiece('b', 1, new Cavalo(board, Color.WHITE));
 		placeNewPiece('c', 1, new Bispo(board, Color.WHITE));
-        placeNewPiece('e', 1, new King(board, Color.WHITE));
+		placeNewPiece('d', 1, new Rainha(board, Color.WHITE));
+		placeNewPiece('e', 1, new King(board, Color.WHITE));
         placeNewPiece('f', 1, new Bispo(board, Color.WHITE));
         placeNewPiece('h', 1, new Torre(board, Color.WHITE));
         placeNewPiece('a', 2, new Peao(board, Color.WHITE));
@@ -211,6 +216,7 @@ public class ChessMatch {
         placeNewPiece('a', 8, new Torre(board, Color.BLACK));
         placeNewPiece('b', 8, new Cavalo(board, Color.BLACK));
         placeNewPiece('c', 8, new Bispo(board, Color.BLACK));
+        placeNewPiece('d', 8, new Rainha(board, Color.BLACK));
         placeNewPiece('e', 8, new King(board, Color.BLACK));
         placeNewPiece('f', 8, new Bispo(board, Color.BLACK));
         placeNewPiece('h', 8, new Torre(board, Color.BLACK));
