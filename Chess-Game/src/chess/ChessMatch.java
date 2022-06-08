@@ -8,6 +8,7 @@ import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.Bispo;
+import chess.pieces.Cavalo;
 import chess.pieces.King;
 import chess.pieces.Peao;
 import chess.pieces.Torre;
@@ -192,7 +193,8 @@ public class ChessMatch {
 	
 	private void initialSetup() {
 		placeNewPiece('a', 1, new Torre(board, Color.WHITE));
-        placeNewPiece('c', 1, new Bispo(board, Color.WHITE));
+		placeNewPiece('b', 1, new Cavalo(board, Color.WHITE));
+		placeNewPiece('c', 1, new Bispo(board, Color.WHITE));
         placeNewPiece('e', 1, new King(board, Color.WHITE));
         placeNewPiece('f', 1, new Bispo(board, Color.WHITE));
         placeNewPiece('h', 1, new Torre(board, Color.WHITE));
@@ -203,9 +205,11 @@ public class ChessMatch {
         placeNewPiece('e', 2, new Peao(board, Color.WHITE));
         placeNewPiece('f', 2, new Peao(board, Color.WHITE));
         placeNewPiece('g', 2, new Peao(board, Color.WHITE));
+        placeNewPiece('g', 1, new Cavalo(board, Color.WHITE));
         placeNewPiece('h', 2, new Peao(board, Color.WHITE));
 
         placeNewPiece('a', 8, new Torre(board, Color.BLACK));
+        placeNewPiece('b', 8, new Cavalo(board, Color.BLACK));
         placeNewPiece('c', 8, new Bispo(board, Color.BLACK));
         placeNewPiece('e', 8, new King(board, Color.BLACK));
         placeNewPiece('f', 8, new Bispo(board, Color.BLACK));
@@ -217,6 +221,7 @@ public class ChessMatch {
         placeNewPiece('e', 7, new Peao(board, Color.BLACK));
         placeNewPiece('f', 7, new Peao(board, Color.BLACK));
         placeNewPiece('g', 7, new Peao(board, Color.BLACK));
+        placeNewPiece('g', 8, new Cavalo(board, Color.BLACK));
         placeNewPiece('h', 7, new Peao(board, Color.BLACK));
 	}
 }
