@@ -47,6 +47,10 @@ public class Program {
 				System.out.println(e.getMessage());
 				sc.nextLine();
 			}
+			catch(IllegalStateException e) {
+				System.out.println(e.getMessage());
+				sc.nextLine();
+			}
 		}
 		UI.clearScreen();
 		UI.printMatch(chessMatch, capturadas);
