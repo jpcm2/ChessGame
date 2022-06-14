@@ -68,6 +68,6 @@ public class Cavalo extends ChessPiece{
 	
 	@Override
 	public String toString() {
-		return "K";
+		return "C";
 	}
 }
