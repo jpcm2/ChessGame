@@ -2,15 +2,18 @@ package chess.pieces;
 
 import boardgame.Board;
 import boardgame.Position;
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.Color;
 
 public class Peao extends ChessPiece{
-
-	public Peao(Board board, Color color) {
+	
+	private ChessMatch chessMatch;
+	public Peao(Board board, Color color, ChessMatch chessMatch) {
 		super(board, color);
+		this.chessMatch = chessMatch;
 	}
-
+	
 	@Override
 	public boolean[][] possibleMoves() {
 		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
@@ -36,6 +39,17 @@ public class Peao extends ChessPiece{
 			if(getBoard().positionExists(p) && this.isThereOpponentPiece(p)){
 				mat[p.getRow()][p.getColumn()] = true;
 			}
+			
+			if(this.position.getRow() == 3) {
+				Position esquerda = new Position(this.position.getRow(), this.position.getColumn() - 1);
+				if(this.getBoard().positionExists(esquerda) && this.isThereOpponentPiece(esquerda) && this.getBoard().piece(esquerda) == chessMatch.getEnPassant()) {
+					mat[esquerda.getRow() - 1][esquerda.getColumn()] = true;
+				}
+				Position direita = new Position(this.position.getRow(), this.position.getColumn() - 1);
+				if(this.getBoard().positionExists(direita) && this.isThereOpponentPiece(direita) && this.getBoard().piece(direita) == chessMatch.getEnPassant()) {
+					mat[direita.getRow() - 1][direita.getColumn()] = true;
+				}
+			}
 		}else {
 			p.setValues(position.getRow() + 1, position.getColumn());
 			if(getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
@@ -55,6 +69,16 @@ public class Peao extends ChessPiece{
 			p.setValues(position.getRow() + 1, position.getColumn() + 1);
 			if(getBoard().positionExists(p) && this.isThereOpponentPiece(p)){
 				mat[p.getRow()][p.getColumn()] = true;
+			}
+			if(this.position.getRow() == 4) {
+				Position esquerda = new Position(this.position.getRow(), this.position.getColumn() - 1);
+				if(this.getBoard().positionExists(esquerda) && this.isThereOpponentPiece(esquerda) && this.getBoard().piece(esquerda) == chessMatch.getEnPassant()) {
+					mat[esquerda.getRow() + 1][esquerda.getColumn()] = true;
+				}
+				Position direita = new Position(this.position.getRow(), this.position.getColumn() - 1);
+				if(this.getBoard().positionExists(direita) && this.isThereOpponentPiece(direita) && this.getBoard().piece(direita) == chessMatch.getEnPassant()) {
+					mat[direita.getRow() + 1][direita.getColumn()] = true;
+				}
 			}
 		}
 		return mat;
